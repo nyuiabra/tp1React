@@ -1,0 +1,14 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    margin: 17px 500px;
+    background-color: white;
+    max-width: 500px;
+    box-shadow: 0 4 8 rgba(0, O, 0, 0.1);
+}
+input{
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #CCC;
+    
+}
