@@ -35,10 +35,11 @@ export default function Login() {
         
 
         if (!validate.success) {
-
+         console.log(validate.error)
         }
 
         navigate("/profil");
+        
 
         console.log("Connexionn réussie :", { email, password })
     }

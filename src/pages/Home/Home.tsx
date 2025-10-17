@@ -1,10 +1,19 @@
 import { Fragment } from "react/jsx-runtime";
 import Input from "../../Components/Input/Input";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { Link, Navigate, Route, useNavigate } from "react-router";
 import z from "zod";
+import axios from "axios";
 
 
+type projectType={
+ titre :string 
+}
+type projectResponse ={
+  data:[
+    projectType
+  ]
+}
 
 export default function Home() {
 
@@ -12,6 +21,7 @@ export default function Home() {
     const [email, setEmail] = useState<string>("")
     const [phone_number, setphoneNumber] = useState<string>("")
     const [password, setPassword] = useState<string>("")
+    const [projects, setProjects] = useState<Array<projectType>>([])
 
     const navigate = useNavigate();
 
@@ -64,9 +74,39 @@ export default function Home() {
     //      const increment = (): void => {
     //     setCount(count * 2)
     // }
+
+    useEffect(()=>{
+  axios.get('https://hooktech.dayal-enterprises.com/public/api/tasks')
+  .then(function (response) {
+    // handle success
+    console.log(response.data);
+    const resultData: projectResponse =response
+   console.log(resultData.data[0]) 
+   setProjects(resultData.data)
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+  .finally(function () {
+    // always executed
+  });
+    },[])
     return (
         <div>
             <Fragment>
+
+              {
+                projects.map((project, index)=>{
+                 return(
+                  <div key={index}>
+                    {project.titre}
+                   
+                  </div>
+                 )
+
+                })
+              }
                 <div className="card">
                 </div>
                 <div className='bcd'>
