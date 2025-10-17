@@ -48,6 +48,7 @@ export default function Home() {
          
 
     if (!validation.success) {
+      console.log(validation)
        
     }
 
