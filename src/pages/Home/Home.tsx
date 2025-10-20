@@ -4,16 +4,12 @@ import { useEffect, useState, type FormEvent } from "react";
 import { Link, Navigate, Route, useNavigate } from "react-router";
 import z from "zod";
 import axios from "axios";
+import type { Task } from "../../data/models/task.model";
+import { taskApi } from "../../api/tasks/list";
 
 
-type projectType={
- titre :string 
-}
-type projectResponse ={
-  data:[
-    projectType
-  ]
-}
+
+
 
 export default function Home() {
 
@@ -21,7 +17,7 @@ export default function Home() {
     const [email, setEmail] = useState<string>("")
     const [phone_number, setphoneNumber] = useState<string>("")
     const [password, setPassword] = useState<string>("")
-    const [projects, setProjects] = useState<Array<projectType>>([])
+    const [tasks, setTasks] = useState<Array<Task>>([])
 
     const navigate = useNavigate();
 
@@ -76,28 +72,26 @@ export default function Home() {
     // }
 
     useEffect(()=>{
-  axios.get('https://hooktech.dayal-enterprises.com/public/api/tasks')
-  .then(function (response) {
-    // handle success
-    console.log(response.data);
-    const resultData: projectResponse =response
-   console.log(resultData.data[0]) 
-   setProjects(resultData.data)
-  })
-  .catch(function (error) {
-    // handle error
-    console.log(error);
-  })
-  .finally(function () {
-    // always executed
-  });
+      const fetchTasks = async() =>  {
+  try {
+    const data = await taskApi.getAll();
+    setTasks(data);
+   }
+   catch (error) {
+     console.log(error)
+    }finally{
+      
+    }  
+  }
+ 
+  fetchTasks()
     },[])
     return (
         <div>
             <Fragment>
 
               {
-                projects.map((project, index)=>{
+                tasks.map((project, index)=>{
                  return(
                   <div key={index}>
                     {project.titre}

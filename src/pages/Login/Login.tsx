@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router";
 import Input from "../../Components/Input/Input";
-import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import z from "zod";
 
 
